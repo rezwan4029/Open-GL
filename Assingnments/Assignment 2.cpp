@@ -30,8 +30,6 @@ typedef pair<double,double>pdd;
 #define rof(i, n)                rofba (i, 1, n)
 #define forstl(i, s)        for (__typeof ((s).end ()) i = (s).begin (); i != (s).end (); ++i)
 
-double Mx = .5 , My = .5 ;
-
 enum {BLACK=0,RED,GREEN,BLUE,YELLOW,PURPLE,CYAN,WHITE};
 void __getColor(int s)  {
     if( s == BLACK )        glColor3f(0,0,0);
@@ -45,62 +43,62 @@ void __getColor(int s)  {
 }
 struct point{
     double x , y ;
+    point(double _x , double _y){
+        x = _x , y = _y ;
+    }
+    point(){}
 };
+point a , b , c , d , Mid = point(0.5,0.5);
+
+void update(double scale) {
+    a.x = Mid.x + scale , a.y = Mid.y + scale ;
+    b.x = Mid.x - scale , b.y = Mid.y + scale ;
+    c.x = Mid.x - scale , c.y = Mid.y - scale ;
+    d.x = Mid.x + scale , d.y = Mid.y - scale ;
+}
 void Draw()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    double scale = .4 ;
+    update(.3);
 
-	__getColor(GREEN);
-	glBegin(GL_QUADS);
-
-    point a , b , c , d ;
-    a.x = Mx + scale , a.y = My + scale ;
-    b.x = Mx - scale , b.y = My + scale ;
-    c.x = Mx - scale , c.y = My - scale ;
-    d.x = Mx + scale , d.y = My - scale ;
+    __getColor(GREEN);
+    glBegin(GL_QUADS);
 
     glVertex3f(a.x,a.y, 0.0);
     glVertex3f(b.x,b.y, 0.0);
     glVertex3f(c.x,c.y, 0.0);
     glVertex3f(d.x,d.y, 0.0);
 
-	glEnd();
-	glFlush();
+    glEnd();
+    glFlush();
 
+    update(.1);
 
-	scale = .2 ;
-	__getColor(CYAN);
-	glBegin(GL_QUADS);
-
-    a.x = Mx + scale , a.y = My + scale ;
-    b.x = Mx - scale , b.y = My + scale ;
-    c.x = Mx - scale , c.y = My - scale ;
-    d.x = Mx + scale , d.y = My - scale ;
+    __getColor(CYAN);
+    glBegin(GL_QUADS);
 
     glVertex3f(a.x,a.y, 0.0);
     glVertex3f(b.x,b.y, 0.0);
     glVertex3f(c.x,c.y, 0.0);
     glVertex3f(d.x,d.y, 0.0);
 
-	glEnd();
-	glFlush();
+    glEnd();
+    glFlush();
 
-
-	__getColor(RED);
-	glPointSize(7);
+    __getColor(RED);
+    glPointSize(7);
     glBegin(GL_POINTS);
-    glVertex3f(Mx,My,0.0);
-	glEnd();
-	glFlush();
+    glVertex3f(Mid.x,Mid.y,0.0);
+    glEnd();
+    glFlush();
 }
 
 void Initialize() {
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+        glClearColor(0.0, 0.0, 0.0, 0.0);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
 }
 
 int main(int iArgc, char** cppArgv) {
