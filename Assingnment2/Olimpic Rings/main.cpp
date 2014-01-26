@@ -107,10 +107,8 @@ void Draw() {
 	getColor(GREEN);
 	glPushMatrix();
         glTranslatef(0.38,0,-4);
-        glPushMatrix();
-            ROTATE();
-            LowerTorus();
-        glPopMatrix();
+        ROTATE();
+        LowerTorus();
     glPopMatrix();
 
 	glFlush();
