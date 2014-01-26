@@ -43,8 +43,6 @@ void getColor(int s)  {
     else if( s == WHITE )   glColor3f(1,1,1);
 }
 
-int slices = 20 ;
-int slacks = 20 ;
 double ang = 0 ;
 
 void Draw() {
@@ -58,13 +56,6 @@ void Draw() {
   glPopMatrix();
   glFlush();
   glutSwapBuffers(); // just keep
-}
-
-
-void windowKey(unsigned char key,int x,int y) {
-  if (key == '+' )  slacks++ , slices++;
-  else if (key == '-')slacks-- , slices--;
-  glutPostRedisplay();
 }
 
 void idle()
@@ -100,7 +91,6 @@ int main(int argc,char* argv[]) {
   Initialize();
   glutReshapeFunc(resize);
   glutDisplayFunc(Draw);
-  glutKeyboardFunc(windowKey);
   glutIdleFunc(idle);
   glutMainLoop();
   return 0;
