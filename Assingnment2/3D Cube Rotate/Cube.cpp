@@ -43,6 +43,7 @@ void getColor(int s)  {
     else if( s == WHITE )   glColor3f(1,1,1);
 }
 
+
 GLfloat A[3] = { 0.75, 0.75, 0.75};
 GLfloat B[3] = {-0.75, 0.75, 0.75};
 GLfloat C[3] = {-0.75,-0.75, 0.75};
@@ -51,16 +52,6 @@ GLfloat E[3] = { 0.75, 0.75,-0.75};
 GLfloat F[3] = {-0.75, 0.75,-0.75};
 GLfloat G[3] = {-0.75,-0.75,-0.75};
 GLfloat H[3] = { 0.75,-0.75,-0.75};
-
-void projection()
-{
-  double dim = 1.5;
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho(-dim , +dim , -dim , +dim , -dim , +dim ); // left, right , bottom, top , nearVal, farVal  the coordinates of clipping planes
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-}
 
 void drawCube()
 {
@@ -119,13 +110,18 @@ int ang1 , ang2 ;
 
 void Draw() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glEnable(GL_DEPTH_TEST);
-  glRotatef(ang2,1,0,0);
-  glRotatef(ang1,0,1,0);
-  drawCube();
+   glEnable(GL_DEPTH_TEST);
+  getColor(RED);
+  glPushMatrix();
+     glTranslated(0,0.2,-4);
+     glRotatef(ang2,1,0,0);
+    glRotatef(ang1,0,1,0);
+    drawCube();
+  glPopMatrix();
   glFlush();
   glutSwapBuffers(); // just keep
 }
+
 
 void windowKey(unsigned char key,int x,int y) {
   if (key == 'd' ) ang1 += 10; // right
@@ -134,23 +130,36 @@ void windowKey(unsigned char key,int x,int y) {
   else if (key == 's') ang2 -= 10; // down
   ang1 = ( ang1 + 360 ) % 360 ;
   ang2 = ( ang2 + 360 ) % 360 ;
-  projection();
   glutPostRedisplay();
 }
 
-void Initialize() {
-	glClearColor(1.0, 1.0, 1.0, 1.0);
-	glMatrixMode(GL_PROJECTION);
-	gluPerspective(45.0, 1.00, 1.0, 200.0);
+void resize(int width, int height)
+{
+    const double ar = (double) width / (double) height;
+
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glFrustum(-ar, ar, -1.0, 1.0, 2.0, 100.0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity() ;
 }
 
+void Initialize() {
+	glClearColor(1, 1, 1, 0.0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0.0, 1.0, 0.0, 1.0, 0.0, 1.0);
+}
 int main(int argc,char* argv[]) {
   glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
   glutInitWindowSize(500,500);
-  glutInitWindowPosition(300, 300);
-  glutCreateWindow("3-D CUBE");
+  glutInitWindowPosition(30, 30);
+  glutCreateWindow("3-D Cube");
   Initialize();
+  glutReshapeFunc(resize);
   glutDisplayFunc(Draw);
   glutKeyboardFunc(windowKey);
   glutMainLoop();
