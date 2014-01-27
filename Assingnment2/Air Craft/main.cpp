@@ -43,9 +43,9 @@ void getColor(int s)  {
     else if( s == WHITE )   glColor3f(1,1,1);
 }
 
-struct PP{
+struct PP {
     double x , y , z ;
-    PP(double _x , double _y , double _z){
+    PP(double _x , double _y , double _z) {
         x = _x ;
         y = _y ;
         z = _z ;
@@ -56,7 +56,7 @@ struct PP{
         return PP(p.x + v.x*c - v.y*s , p.y + v.x*s + v.y*c ,0);
     }
 
-    PP(){}
+    PP() {}
 };
 
 PP P[15];
@@ -78,10 +78,10 @@ void InitPosition() {
     P[12] = PP( .45 , .30 , 0 );
     P[13] = PP( .45 , .25 , 0 );
 }
-PP getMid(){
+PP getMid() {
     double MxX = 0 , MxY = 0 ;
     double MnX = 10000 , MnY = 10000 ;
-    For(i,13){
+    For(i,13) {
         MxX = max(MxX,P[i].x);
         MxY = max(MxY,P[i].y);
         MnX = min(MnX,P[i].x);
@@ -89,193 +89,178 @@ PP getMid(){
     }
     return PP( (MxX + MnX) /2.00 , (MnY + MxY) / 2.00 , 0 );
 }
-void goLeft(){
+void goLeft() {
     PP MID = getMid();
     //cout << MID.x << "  " << MID.y << endl;
     For(i,13) P[i] = P[i].rotate(MID,pi/2.00);
 }
-void goRight(){
+void goRight() {
     PP MID = getMid();
     cout << MID.x << "  " << MID.y << endl;
     For(i,13) P[i] = P[i].rotate(MID,-pi/2.00);
 }
-void moveRight(){
+void moveRight() {
     For(i,13) P[i].x += Shift;
 }
-void moveLeft(){
+void moveLeft() {
     For(i,13) P[i].x -= Shift;
 }
-void moveUp(){
+void moveUp() {
     For(i,13) P[i].y += Shift;
 }
-void moveDown(){
+void moveDown() {
     For(i,13) P[i].y -= Shift;
 }
 
-void drawAirCraft()
-{
-  	glBegin(GL_POLYGON);
-        glVertex3f(P[9].x,P[9].y,P[9].z);
-        glVertex3f(P[8].x,P[8].y,P[8].z);
-        glVertex3f(P[7].x,P[7].y,P[7].z);
-        glVertex3f(P[6].x,P[6].y,P[6].z);
-        glVertex3f(P[10].x,P[10].y,P[10].z);
-	glEnd();
+void drawAirCraft() {
+    glBegin(GL_POLYGON);
+    glVertex3f(P[9].x,P[9].y,P[9].z);
+    glVertex3f(P[8].x,P[8].y,P[8].z);
+    glVertex3f(P[7].x,P[7].y,P[7].z);
+    glVertex3f(P[6].x,P[6].y,P[6].z);
+    glVertex3f(P[10].x,P[10].y,P[10].z);
+    glEnd();
 
-
-	glBegin(GL_POLYGON);
-        glVertex3f(P[10].x,P[10].y,P[10].z);
-        glVertex3f(P[11].x,P[11].y,P[11].z);
-        glVertex3f(P[12].x,P[12].y,P[12].z);
-        glVertex3f(P[4].x,P[4].y,P[4].z);
-        glVertex3f(P[5].x,P[5].y,P[5].z);
-        glVertex3f(P[6].x,P[6].y,P[6].z);
-	glEnd();
+    glBegin(GL_POLYGON);
+    glVertex3f(P[10].x,P[10].y,P[10].z);
+    glVertex3f(P[11].x,P[11].y,P[11].z);
+    glVertex3f(P[12].x,P[12].y,P[12].z);
+    glVertex3f(P[4].x,P[4].y,P[4].z);
+    glVertex3f(P[5].x,P[5].y,P[5].z);
+    glVertex3f(P[6].x,P[6].y,P[6].z);
+    glEnd();
 
     glBegin(GL_QUADS);
 
-        glVertex3f(P[3].x,P[3].y,P[3].z);
-        glVertex3f(P[4].x,P[4].y,P[4].z);
-        glVertex3f(P[12].x,P[12].y,P[12].z);
-        glVertex3f(P[13].x,P[13].y,P[13].z);
+    glVertex3f(P[3].x,P[3].y,P[3].z);
+    glVertex3f(P[4].x,P[4].y,P[4].z);
+    glVertex3f(P[12].x,P[12].y,P[12].z);
+    glVertex3f(P[13].x,P[13].y,P[13].z);
 
-        glVertex3f(P[1].x,P[1].y,P[1].z);
-        glVertex3f(P[2].x,P[2].y,P[2].z);
-        glVertex3f(P[3].x,P[3].y,P[3].z);
-        glVertex3f(P[13].x,P[13].y,P[13].z);
+    glVertex3f(P[1].x,P[1].y,P[1].z);
+    glVertex3f(P[2].x,P[2].y,P[2].z);
+    glVertex3f(P[3].x,P[3].y,P[3].z);
+    glVertex3f(P[13].x,P[13].y,P[13].z);
 
-	glEnd();
+    glEnd();
 }
-
 void Draw() {
-  glClear(GL_COLOR_BUFFER_BIT);
-  getColor(RED);
-  glPushMatrix();
-      glTranslated(-0.5,-.8,0);
-     drawAirCraft();
-  glPopMatrix();
-  glFlush();
+    glClear(GL_COLOR_BUFFER_BIT);
+    getColor(CYAN);
+    glPushMatrix();
+    glTranslated(-0.5,-.8,0);
+    drawAirCraft();
+    glPopMatrix();
+    glFlush();
 }
-
 bool flag = true ;
 int l = 0 , r = 0 , u = 1 , d = 0 ;
 void windowKey(unsigned char key,int x,int y) {
-  if (key == 'd' ) { // right button
-     if(flag) {
-        goRight();
-        r = 1 , l = u = d = 0 ;
-        flag = false;
-     }
-     else {
-       if(u == 1 ) {
-        r = 1 ; u = d = l = 0 ;
-        goRight();
-       }
-       else if( d == 1 ){
-        r = 1 , u = d = l = 0 ;
-        goLeft();
-       }
-       else if( r == 1 ){
-            moveRight();
-       }
-       else if(l == 1 ){
-         r = 1 , l = u = d = 0 ;
-         goRight(); goRight();
-       }
-     }
-  }
-  else if (key == 'a') { // left button
-    if(flag) {
-        goLeft();
-        l  = 1 , r = u = d = 0 ;
-        flag = false;
-     }
-     else {
-       if(u == 1 ){
-         goLeft();
-         l = 1 ; r = d = u = 0;
-       }
-       else if( d == 1 ){
-          goRight();
-          l = 1 ; r = d = u = 0 ;
-       }
-       else if( r == 1){
-            goLeft() ; goLeft();
-            l = 1 , r = u = d = 0 ;
-       }
-       else if( l == 1 ){
-            moveLeft();
-       }
-     }
-  }
-  else if (key == 'w') { // up button
-    if(flag) {
-        moveUp();
-        u = 1 , l = r = d = 0 ;
-        flag = false;
-    }
-    else {
-       if( u == 1 ){
+    if (key == 'd' ) { // right button
+        if(flag) {
+            goRight();
+            r = 1 , l = u = d = 0 ;
+            flag = false;
+        } else {
+            if(u == 1 ) {
+                r = 1 ;
+                u = d = l = 0 ;
+                goRight();
+            } else if( d == 1 ) {
+                r = 1 , u = d = l = 0 ;
+                goLeft();
+            } else if( r == 1 ) {
+                moveRight();
+            } else if(l == 1 ) {
+                r = 1 , l = u = d = 0 ;
+                goRight();
+                goRight();
+            }
+        }
+    } else if (key == 'a') { // left button
+        if(flag) {
+            goLeft();
+            l  = 1 , r = u = d = 0 ;
+            flag = false;
+        } else {
+            if(u == 1 ) {
+                goLeft();
+                l = 1 ;
+                r = d = u = 0;
+            } else if( d == 1 ) {
+                goRight();
+                l = 1 ;
+                r = d = u = 0 ;
+            } else if( r == 1) {
+                goLeft() ;
+                goLeft();
+                l = 1 , r = u = d = 0 ;
+            } else if( l == 1 ) {
+                moveLeft();
+            }
+        }
+    } else if (key == 'w') { // up button
+        if(flag) {
             moveUp();
-       }
-       else if( d == 1 ){
-          goLeft(); goLeft();
-          u = 1 , d = l = r = 0 ;
-       }
-       else if(l == 1){
-            goRight();
             u = 1 , l = r = d = 0 ;
-       }
-       else if(r == 1 ){
+            flag = false;
+        } else {
+            if( u == 1 ) {
+                moveUp();
+            } else if( d == 1 ) {
+                goLeft();
+                goLeft();
+                u = 1 , d = l = r = 0 ;
+            } else if(l == 1) {
+                goRight();
+                u = 1 , l = r = d = 0 ;
+            } else if(r == 1 ) {
+                goLeft();
+                u = 1 , l = r = d = 0 ;
+            }
+        }
+    } else if (key == 's') { // down button
+        if(flag) {
             goLeft();
-            u = 1 , l = r = d = 0 ;
-       }
-    }
-  }
-  else if (key == 's') { // down button
-    if(flag) {
-        goLeft(); goLeft();
-        u = 1 , r = d = l = 0 ;
-        flag = false;
-    }
-    else {
-        if( u == 1){
-             goLeft(); goLeft();
-             d = 1 , r = u = l = 0 ;
-        }
-        else if( d == 1 ){
-            moveDown();
-        }
-        else if( l == 1 ){
             goLeft();
-            d = 1 , l = r = u = 0 ;
-        }
-        else if( r == 1 ){
-            goRight();
-            d = 1 , l = r = u = 0 ;
+            u = 1 , r = d = l = 0 ;
+            flag = false;
+        } else {
+            if( u == 1) {
+                goLeft();
+                goLeft();
+                d = 1 , r = u = l = 0 ;
+            } else if( d == 1 ) {
+                moveDown();
+            } else if( l == 1 ) {
+                goLeft();
+                d = 1 , l = r = u = 0 ;
+            } else if( r == 1 ) {
+                goRight();
+                d = 1 , l = r = u = 0 ;
+            }
         }
     }
-  }
-  glutPostRedisplay();
+    glutPostRedisplay();
 }
 
 
 void Initialize() {
-	glClearColor(1.0, 1.0, 1.0, 0.0);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+    glClearColor(1.0, 1.0, 1.0, 0.0);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
 }
 int main(int argc,char* argv[]) {
-  glutInit(&argc,argv);
-  glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-  glutInitWindowSize(500,500);
-  glutInitWindowPosition(100,100);
-  glutCreateWindow("Air - Craft");
-  InitPosition();
-  Initialize();
-  glutDisplayFunc(Draw);
-  glutKeyboardFunc(windowKey);
-  glutMainLoop();
-  return 0;
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(500,500);
+    glutInitWindowPosition(100,100);
+    glutCreateWindow("Air - Craft");
+    InitPosition();
+    Initialize();
+    glutDisplayFunc(Draw);
+    glutKeyboardFunc(windowKey);
+    glutMainLoop();
+    return 0;
 }
