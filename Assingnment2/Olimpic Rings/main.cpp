@@ -46,7 +46,7 @@ void getColor(int s)  {
 int ang = 0;
 
 void ROTATE(){
-    glRotatef(ang, 1.0, 0.0, 0.0);
+    glRotatef(ang, 0.0, 1.0, 0.0);
 }
 
 /**
@@ -64,18 +64,18 @@ void LowerTorus(){
 }
 
 void Draw() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // just keep
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // just keep
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
 
     getColor(BLUE);
-	glPushMatrix();
+        glPushMatrix();
         glTranslatef(-.5,0.2,-5);
         glPushMatrix();
             ROTATE();
             UpperTorus();;
         glPopMatrix();
-	glPopMatrix();
+        glPopMatrix();
 
 
     getColor(BLACK);
@@ -83,81 +83,81 @@ void Draw() {
         glTranslatef(.15,0.2,-5);
         ROTATE();
         UpperTorus();;
-	glPopMatrix();
+        glPopMatrix();
 
-	getColor(RED);
-	glPushMatrix();
+        getColor(RED);
+        glPushMatrix();
         glTranslatef(.80,0.2,-5);
-		ROTATE();
+                ROTATE();
         UpperTorus();;
     glPopMatrix();
 
 // Down Begins
 
-	glPushMatrix();
+        glPushMatrix();
         glTranslatef(-.15,0,-4);
         getColor(YELLOW);
         glPushMatrix();
             ROTATE();
             LowerTorus();
-		glPopMatrix();
-	glPopMatrix();
+                glPopMatrix();
+        glPopMatrix();
 
 
-	getColor(GREEN);
-	glPushMatrix();
+        getColor(GREEN);
+        glPushMatrix();
         glTranslatef(0.38,0,-4);
         ROTATE();
         LowerTorus();
     glPopMatrix();
 
-	glFlush();
-	glutSwapBuffers(); // just keep
+        glFlush();
+        glutSwapBuffers(); // just keep
 }
 
 
 void update(int val = 0 ) {
-	ang = ( ang + 10 )% 360 ;
-	glutPostRedisplay();
-	glutTimerFunc(100,update,0);
+        ang = ( ang + 10 )% 360 ;
+        glutPostRedisplay();
+        glutTimerFunc(100,update,0);
 }
 
 void lightSetting()
 {
-	double zpos = 0.0;
-	GLfloat ambientIntensity[4] = {0.2, 0.1, 0.2, 1.0}; // 6. ambient property
-	GLfloat diffuseIntensity[4] = {0.3, 0.9, 0.0, 1.0}; // 8. ambient property
-	GLfloat position[4] = {0.0, 1.0, zpos, 0.0}; // 10. position property
+        double zpos = 0.0;
+        GLfloat ambientIntensity[4] = {0.2, 0.1, 0.2, 1.0}; // 6. ambient property
+        GLfloat diffuseIntensity[4] = {0.3, 0.9, 0.0, 1.0}; // 8. ambient property
+        GLfloat position[4] = {0.0, 1.0, zpos, 0.0}; // 10. position property
 
-	glEnable(GL_DEPTH_TEST); // 4. just keep
-	glEnable(GL_COLOR_MATERIAL); // 3. Materals' color
+        glEnable(GL_DEPTH_TEST); // 4. just keep
+        glEnable(GL_COLOR_MATERIAL); // 3. Materals' color
 
-	glEnable(GL_LIGHTING); // 1. enable lighting
-	glEnable(GL_LIGHT0); // 2. enable light 0
-	glEnable(GL_NORMALIZE);
+        glEnable(GL_LIGHTING); // 1. enable lighting
+        glEnable(GL_LIGHT0); // 2. enable light 0
+        glEnable(GL_NORMALIZE);
 
-	// set up light 0 properties
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientIntensity); // 7. ambient property adding to Light0
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseIntensity); // 9. ambient property adding to Light0
-	glLightfv(GL_LIGHT0, GL_POSITION, position); // 11. position property adding to Light0
+        // set up light 0 properties
+        glLightfv(GL_LIGHT0, GL_AMBIENT, ambientIntensity); // 7. ambient property adding to Light0
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseIntensity); // 9. ambient property adding to Light0
+        glLightfv(GL_LIGHT0, GL_POSITION, position); // 11. position property adding to Light0
 }
 
 void Initialize() {
-	glClearColor(1.0, 1.0, 1.0, 1.0);
-	glMatrixMode(GL_PROJECTION);
-	gluPerspective(45.0, 1.00, 1.0, 200.0);
+        glClearColor(1.0, 1.0, 1.0, 1.0);
+        glMatrixMode(GL_PROJECTION);
+        gluPerspective(45.0, 1.00, 1.0, 200.0);
 }
 
 int main(int iArgc, char** cppArgv) {
-	glutInit(&iArgc, cppArgv);
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowSize(500, 500);
-	glutInitWindowPosition(300, 300);
-	glutCreateWindow("Olimpic Ring");
-	Initialize();
-	lightSetting();
-	glutDisplayFunc(Draw);
-	update();
-	glutMainLoop();
-	return 0;
+        glutInit(&iArgc, cppArgv);
+        glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+        glutInitWindowSize(500, 500);
+        glutInitWindowPosition(300, 300);
+        glutCreateWindow("Olimpic Ring");
+        Initialize();
+        lightSetting();
+        glutDisplayFunc(Draw);
+        update();
+        glutMainLoop();
+        return 0;
 }
